@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Switch
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,14 +18,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val switch_brwsr = findViewById<Switch>(R.id.switchBrowser).setOnCheckedChangeListener{ _, isChecked ->
+            if (isChecked){
+                val intent = Intent(this,WebBrowse::class.java)
+                startActivity(intent)
+            }
+        }
 
         addTask.setOnClickListener {
             val intent = Intent(this, CreateCard::class.java)
             startActivity(intent)
-        }
-
-        deleteAll.setOnClickListener {
-            DataObject.deleteAll()
         }
 
         val linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
@@ -34,23 +37,19 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onRestart() {
-        super.onRestart()
+//    override fun onRestart() {
+//        super.onRestart()
 //        startActivity(Intent(this,SplashScreen::class.java))
-    }
+//    }
 
     override fun onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()){
             super.onBackPressed()
-            finishAffinity()
+            finish()
         }else{
             Toast.makeText(this,"Press Back Again",Toast.LENGTH_SHORT).show()
         }
         backPressedTime = System.currentTimeMillis()
     }
 
-    fun webBrowse(view: View) {
-        val intent = Intent(this,WebBrowse::class.java)
-        startActivity(intent)
-    }
 }

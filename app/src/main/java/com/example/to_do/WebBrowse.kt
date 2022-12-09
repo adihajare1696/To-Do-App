@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Switch
 import android.widget.Toast
 
 class WebBrowse : AppCompatActivity() {
@@ -28,5 +29,11 @@ class WebBrowse : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
+        val switch = findViewById<Switch>(R.id.switchBrowser)
+        switch.isChecked = false
     }
 }
